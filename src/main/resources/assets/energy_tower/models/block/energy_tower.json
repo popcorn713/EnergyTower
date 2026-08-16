@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "energy_tower:block/energy_tower_top",
+    "side": "energy_tower:block/energy_tower_side",
+    "bottom": "energy_tower:block/energy_tower_bottom"
+  }
+}

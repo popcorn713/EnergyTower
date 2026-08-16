@@ -1,0 +1,15 @@
+pluginManagement {
+    repositories {
+        // BMCLAPI 国内镜像（替换 maven.neoforged.net）
+        maven { url = 'https://bmclapi2.bangbang93.com/maven/' }
+        maven { url = 'https://maven.neoforged.net/releases' }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+}
+
+rootProject.name = 'EnergyTower'

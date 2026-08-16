@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "energy_tower:item/energy_link_wrench"
+  }
+}

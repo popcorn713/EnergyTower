@@ -1,0 +1,71 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '1.0.18'
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = mod_id
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = project.neo_version
+
+    // 运行配置：客户端 / 服务器 / 数据生成
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+        data {
+            data()
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+dependencies {
+}
+
+repositories {
+    // BMCLAPI 国内镜像（替换 maven.neoforged.net），mavenCentral 用阿里云加速
+    maven { url = 'https://bmclapi2.bangbang93.com/maven/' }
+    maven { url = 'https://maven.neoforged.net/releases' }
+    maven { url = 'https://maven.aliyun.com/repository/central' }
+    mavenCentral()
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+            minecraft_version     : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version           : neo_version,
+            neo_version_range     : neo_version_range,
+            loader_version_range  : loader_version_range,
+            mod_id                : mod_id,
+            mod_name              : mod_name,
+            mod_license           : mod_license,
+            mod_version           : mod_version,
+            mod_authors           : mod_authors,
+            mod_description       : mod_description,
+    ]
+    inputs.properties replaceProperties
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties
+    }
+}
