@@ -22,3 +22,7 @@ Thumbs.db
 
 # 生成的预览图（脚本可再生成）
 tools/gui_preview.png
+
+# 构建产物 / 模组 jar（防误传到源码；gradle wrapper 除外）
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
